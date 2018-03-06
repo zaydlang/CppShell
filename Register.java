@@ -35,6 +35,31 @@ public class Register {
 		vars.put(inputTokens.get(1).getIdentity(), var);
 	}
 	
+	public static void updateVariable(ArrayList<Token> inputTokens) {
+		if (!(inputTokens.get(1).getValue() == 403)) return; // TODO: better handling
+		double result = 0;
+		try {
+		    ExpressionSolver es = new ExpressionSolver(inputTokens);
+		    result = Double.parseDouble(es.simplify());
+		} catch (NullPointerException e) {
+			if (inputTokens.get(2).getIdentity().equals("NULL") && inputTokens.size() == 3) {
+			    vars.put(inputTokens.get(1).getIdentity(), null);
+			}
+		}
+		
+		Variable var = null;
+		switch (Register.getVar(inputTokens.get(0).getIdentity()).getType()) {
+			case 0:
+				var = new VarInteger((int)result);
+				break;
+			case 1:
+				var = new VarDouble(result);
+				break;
+		}
+		
+		vars.put(inputTokens.get(0).getIdentity(), var);
+	}
+	
 	public static Variable getVar(String name) {
 		return vars.get(name);
 	}

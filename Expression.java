@@ -226,7 +226,7 @@ class ExpressionSolver {
    }
    
    public ExpressionSolver(ArrayList<Token> inputTokens) {
-      for (int i = 3; i < inputTokens.size(); i++) {
+      for (int i = inputTokens.get(0).getValue() / 100 == 1 ? 3 : 2; i < inputTokens.size(); i++) {
          switch (inputTokens.get(i).getValue()) {
          	case 404:
          	   expression.add(new Plus());

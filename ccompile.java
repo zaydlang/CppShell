@@ -61,6 +61,10 @@ public class ccompile {
     		Register.addVariable(inputTokens);
     	}
     	
+		if (inputTokens.get(0).getValue() == 1000) {
+			Register.updateVariable(inputTokens);
+		}
+		
     	if (inputTokens.get(0).getValue() == 300) {
     		cout(inputTokens);
     	}
