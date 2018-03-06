@@ -9,6 +9,8 @@ public class ccompile {
 	private static Tokenizer t;
 	
 	public static void main(String[] args) {
+		System.out.println("C++ Shell Written in Java");
+		System.out.println("Loading Tokens");
 		// Initialize Stuffs
 		Scanner s = new Scanner(System.in);
 		String input = "";
@@ -38,10 +40,12 @@ public class ccompile {
 		t.addSearchToken("[0-9]+.*[0-9]*", 1002);            // numbers
 		// t.add("(([a-z]|[A-Z])+)\(\)", 500); i probably don't need to add functions...
 		
+		System.out.println("Ready");
+		System.out.println("See README.txt for a list of supported commands.");
 		// Main Loop
 		System.out.print("@: ");
-		try {
-			do {
+		do {
+			try {
 				input += s.nextLine();
 				if (input.charAt(input.length() - 1) == ';') {
 					input = input.substring(0, input.length() - 1);
@@ -50,10 +54,10 @@ public class ccompile {
 					input = "";
 					System.out.print("@: ");
 				}
-			} while (input != "exit");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} while (input != "exit");
     }
     
     public static void readTokens(ArrayList<Token> inputTokens) throws Exception {

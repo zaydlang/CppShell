@@ -4,23 +4,22 @@ import java.util.HashMap;
 public class Register {
 	private static HashMap<String, Variable> vars = new HashMap<String, Variable>();
 	
-	static {
-		vars.put("NULL", null);
-	}
-	
-	public static void addVariable(ArrayList<Token> inputTokens) {
+	public static void addVariable(ArrayList<Token> inputTokens) throws Exception {
 		// Verify the notation is correct!
-		if (!(inputTokens.get(1).getValue() == 1000) || !(inputTokens.get(2).getValue() == 403)) return; // TODO: better handling
 		double result = 0;
 		
-		try {
-		    ExpressionSolver es = new ExpressionSolver(inputTokens);
-		    result = Double.parseDouble(es.simplify());
-		} catch (NullPointerException e) {
-			if (inputTokens.get(3).getIdentity().equals("NULL") && inputTokens.size() == 4) {
-			    vars.put(inputTokens.get(1).getIdentity(), null);
+		if (inputTokens.size() == 2) {
+			result = 0; // c++ values are default 0
+		} else {
+			if (!(inputTokens.get(1).getValue() == 1000) || !(inputTokens.get(2).getValue() == 403)) return; // TODO: better handling
+		
+			try {
+				ExpressionSolver es = new ExpressionSolver(inputTokens);
+				result = Double.parseDouble(es.simplify());
+			} catch (Exception e) {
+				throw e;
 			}
-		}
+        }
         
         Variable var = null;
 		switch (inputTokens.get(0).getIdentity()) {
@@ -30,21 +29,21 @@ public class Register {
 			case "double":
 				var = new VarDouble(result);
 				break;
+			default:
+				throw new Exception("java.ccompile.UnknownTokenException");
 		}
 		
 		vars.put(inputTokens.get(1).getIdentity(), var);
 	}
 	
-	public static void updateVariable(ArrayList<Token> inputTokens) {
+	public static void updateVariable(ArrayList<Token> inputTokens) throws Exception {
 		if (!(inputTokens.get(1).getValue() == 403)) return; // TODO: better handling
 		double result = 0;
 		try {
 		    ExpressionSolver es = new ExpressionSolver(inputTokens);
 		    result = Double.parseDouble(es.simplify());
 		} catch (NullPointerException e) {
-			if (inputTokens.get(2).getIdentity().equals("NULL") && inputTokens.size() == 3) {
-			    vars.put(inputTokens.get(1).getIdentity(), null);
-			}
+			throw e;
 		}
 		
 		Variable var = null;

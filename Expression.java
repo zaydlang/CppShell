@@ -225,7 +225,7 @@ class ExpressionSolver {
       stringToSymbols(input);
    }
    
-   public ExpressionSolver(ArrayList<Token> inputTokens) {
+   public ExpressionSolver(ArrayList<Token> inputTokens) throws Exception {
       for (int i = inputTokens.get(0).getValue() / 100 == 1 ? 3 : 2; i < inputTokens.size(); i++) {
          switch (inputTokens.get(i).getValue()) {
          	case 404:
@@ -245,6 +245,8 @@ class ExpressionSolver {
          	   break;
          	case 1000:
          	   Variable var = Register.getVar(inputTokens.get(i).getIdentity());
+			   if (var == null) throw new NullPointerException();
+			   
          	   if (var.getType() == 0) {
          	      double value = (int)var.getValue();
          	      expression.add(new Number(value));
